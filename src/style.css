@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*
+{
+    margin: 0;
+    /* padding: 0; */
+}
+
+html,
+body
+{
+    /* This code is used to avoid the user to scroll  */
+    /* overflow: hidden; */
+    background: #000000;;
+}
+
+.webgl
+{
+    position: fixed;
+    /* z-index: -1; */
+    /* top: 0; */
+    /* left: 0; */
+    /* outline: none; */
+}
+
+
+.section
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* z-index: -1; */
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    color: #ffeded;
+    text-transform: uppercase;
+    font-size: 7vmin;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.section h1{
+    text-align: center;   
+}
+
+.section p{
+    text-align: center;
+}
+/* 
+section:nth-child(odd)
+{
+    justify-content: flex-end;
+} */
