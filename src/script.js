@@ -94,6 +94,21 @@ scene.add(mesh1, mesh2, mesh3)
 
 const sectionMeshes = [mesh1, mesh2, mesh3]
 
+// Particles
+const particlesGeometry = new THREE.BufferGeometry()
+const particlesCount = 8000
+const positionArray = new Float32Array(particlesCount * 3)
+for(let i = 0; i < particlesCount * 3; i++) {
+    positionArray[i] = (Math.random() - 0.5) * 17
+}
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
+const particlesMaterial = new THREE.PointsMaterial({ size: 0.03, sizeAttenuation: true, color: parameters.materialColor, transparent: true, alphaMap: texture, alphaTest: 0.001 })
+
+// Points
+
+const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+scene.add(particles)
+
 /**
  * Sizes
  */
@@ -176,17 +191,21 @@ window.addEventListener('mousemove', (event) => {
  * Cursor section
  */
 
+let previousTime = 0
+
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime
+    previousTime = elapsedTime
     
     // Animate camera
 
     camera.position.y = - scrollY / sizes.height * objectsDistance
     const parallaxX = cursor.x * 0.2
     const parallaxY = cursor.y * 0.2
-    camera.position.x = parallaxX
-    cameraGroup.position.y = - parallaxY
+    cameraGroup.position.x += ( parallaxX - cameraGroup.position.x ) * 2 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y ) * 2 * deltaTime
     camera.position.z = 6 + parallaxY
     camera.rotation.y = - parallaxX * 0.1
     camera.rotation.x = - parallaxY * 0.1
