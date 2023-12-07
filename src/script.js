@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { gsap } from 'gsap'
+
 /**
  * Debug
  */
@@ -192,6 +194,29 @@ window.addEventListener('mousemove', (event) => {
  */
 
 let previousTime = 0
+let currentSection = 0
+
+window.addEventListener('scroll', (event) => {
+    scrollY = window.scrollY
+    const newSection = Math.round(scrollY / sizes.height)
+
+    if(newSection !== currentSection) {
+        currentSection = newSection
+
+        gsap.to(
+            sectionMeshes[currentSection].rotation, 
+            { 
+                duration: 1.5, 
+                ease: 'power1.inOut',
+                x: '+=6',
+                y: '+=3',
+                z: '+=3'
+            }
+        )
+
+    }
+
+})
 
 const tick = () =>
 {
@@ -212,8 +237,8 @@ const tick = () =>
 
 
     for(const mesh of sectionMeshes) {
-        mesh.rotation.y = elapsedTime * 0.1
-        mesh.rotation.x = elapsedTime * 0.12
+        mesh.rotation.y += deltaTime * 0.1
+        mesh.rotation.x += deltaTime * 0.12
     }
 
     // Rotation of the ribbon mesh but applied to the whole group/camera
